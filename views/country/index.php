@@ -1,46 +1,54 @@
 <?php
 
-use app\models\Country;
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use kartik\form\ActiveForm;
+use kartik\builder\Form;
+use app\models\Country;
+use kartik\builder\TabularForm;
+use yii\helpers\ArrayHelper;
 
-/** @var yii\web\View $this */
-/** @var app\models\CountrySearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+$FormAttribs = array(
+    /*
+    'id'=>[ // primary key attribute
+        'type'=>TabularForm::INPUT_HIDDEN, 
+        'columnOptions'=>['hidden'=>true]
+    ], */
+    'name'=>['type'=>TabularForm::INPUT_TEXT],
+    'population'=>['type'=>TabularForm::INPUT_TEXT],
+    'dateTime'=>['type'=>TabularForm::INPUT_TEXT]
+);
 
-$this->title = 'Countries';
-$this->params['breadcrumbs'][] = $this->title;
+
+
+
+  
+  
+  
+    
+  $form = ActiveForm::begin();
+echo TabularForm::widget([
+    'dataProvider'=>$dataProvider,
+    'form'=>$form,
+    'attributes'=>$FormAttribs,
+    'gridSettings'=>['condensed'=>true]
+]);
+// Add other fields if needed or render your submit button
+echo '<div class="text-right text-end">' . 
+     Html::submitButton('Submit', ['class'=>'btn btn-primary']) .
+     '<div>';
+ActiveForm::end();
+    
+
 ?>
-<div class="country-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Country', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'code',
-            'name',
-            'population',
-            'dateTime',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Country $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'code' => $model->code]);
-                 }
-            ],
-        ],
-    ]); ?>
 
 
-</div>
+
+
+
+
+
+
