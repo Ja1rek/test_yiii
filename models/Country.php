@@ -10,6 +10,7 @@ use Yii;
  * @property string $code
  * @property string $name
  * @property int $population
+ * @property int $date
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -19,6 +20,15 @@ class Country extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'country';
+    }
+
+    public function getDateTime()
+    {
+        return date('Y/m/d',$this->date);
+    }
+    public function setDateTime($dataTime)
+    {
+        $this->date=strtotime($dataTime);
     }
 
     /**
